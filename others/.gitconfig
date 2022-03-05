@@ -1,0 +1,18 @@
+[user]
+    email = david_cn_huang@wistron.com
+    name = David CN Huang/WHQ/Wistron
+[color "diff"]
+    new = yellow
+[core]
+    editor = vim
+[diff]
+    tool = vimdiff
+[merge]
+    tool = vimdiff
+[difftool]
+    prompt = false
+    trustExitCode = true
+[alias]
+    dt = difftool
+[credential]
+    helper = store
