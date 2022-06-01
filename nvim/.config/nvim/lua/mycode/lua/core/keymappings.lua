@@ -2,6 +2,7 @@
 -- key mapping
 ---------------------------------------------------------------------------------------------------
 local M = {}
+
 local generic_opts_any = { noremap = true, silent = true }
 
 local generic_opts = {
@@ -97,7 +98,13 @@ local keymaps = {
   },
 }
 
-function set_keymaps(mode, key, val)
+--[[
+  mode = {
+    key = {val, {opt}}
+  }
+]]--
+
+set_keymaps = function(mode, key, val)
   local opt = generic_opts[mode] or generic_opts_any
   if type(val) == "table" then
     opt = val[2]
@@ -110,23 +117,24 @@ function set_keymaps(mode, key, val)
   end
 end
 
-function load_mode(mode, keymaps)
+load_mode = function(mode, keymaps)
   mode = mode_adapters[mode] or mode
   for k, v in pairs(keymaps) do
     set_keymaps(mode, k, v)
   end
 end
 
-mycode.keys = {}
-for mode, mapping in pairs(keymaps) do
-  load_mode(mode, mapping)
-  mycode.keys[mode] = {}
-end
-
-function M.load(keymaps)
+M.load_keymaps = function(keymaps)
   keymaps = keymaps or {}
   for mode, mapping in pairs(keymaps) do
     load_mode(mode, mapping)
+  end
+end
+
+M.load_default = function()
+  for mode, mapping in pairs(keymaps) do
+    load_mode(mode, mapping)
+    mycode.keys[mode] = {}
   end
 end
 
