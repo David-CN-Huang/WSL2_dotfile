@@ -40,16 +40,16 @@ end
 -- handle plugins if that neened to config and setup
 local plugins = require("plugins")
 for k, p in pairs(plugins) do
-  for _, repo in pairs(p) do
+  for i, repo in ipairs(p) do
     -- find plugin name pn
-    local pn = string.gsub(repo, ".*/(%w+)", "%1")
-    -- remove file extension .nvim and .lua
-    pn = string.gsub(string.gsub(pn, "(%w+)(%.nvim)", "%1"), "(%w+)(%.lua)", "%1")
-    local ok, conf = pcall(require, "plugins." .. pn)
-    if ok and conf then
-      plugins[k].setup  = conf.setup()
-      plugins[k].config = conf.config()
-    end
+      local pn = string.gsub(repo, ".*/(%w+)", "%1")
+      -- remove file extension .nvim and .lua
+      pn = string.gsub(string.gsub(pn, "(%w+)(%.nvim)", "%1"), "(%w+)(%.lua)", "%1")
+      local ok, conf = pcall(require, "plugins." .. pn)
+      if ok and conf then
+        plugins[k].setup  = conf.setup()
+        plugins[k].config = conf.config()
+      end
   end
 end
 
